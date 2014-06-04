@@ -16,10 +16,10 @@ var Helper = {
     context.fillRect(x, y, width, height);
   },
 
-  circle: function(context, radius, x, y) {
+  circle: function(context, radius, x, y, color) {
     context.beginPath();
     context.arc(x, y, radius, 0, 2 * Math.PI, false);
-    context.fillStyle = 'green';
+    context.fillStyle = color || 'green';
     context.fill();
     context.lineWidth = 1;
     context.strokeStyle = '#003300';

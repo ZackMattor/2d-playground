@@ -47,23 +47,26 @@ Map.prototype = {
   },
 
   get: function(x, y) {
-    if(this.model.height > y && this.model.width > x)
+    if(this.model.height > y && this.model.width > x && y >= 0 && x >= 0)
       return this.model.data[y][x];
     else
-      return null;
+      return 1;
   },
 
   cast: function(context, player) {
-    //this.fireRay(context, player.direction, player.x, player.y);
-    //this.fireRay(context, player.direction + (Config.fov/2), player.x, player.y);
-    //this.fireRay(context, player.direction - (Config.fov/2), player.x, player.y);
     var res = Math.floor(Config.rayResolution/2);
     var step = Config.fov/(Config.rayResolution-1);
     
     for(var i=0; i<Config.rayResolution; i++) {
       angle = player.direction + step * i;
 
-      //console.log(i + ': ' + (step * 180/Math.PI));
+      if(i == 0 || i == Config.rayResolution-1) {
+        x = Helper.toPixel(player.x);
+        y = Helper.toPixel(player.y);
+
+        Helper.line(context, x, y, x + Math.cos(angle) * 100, y + Math.sin(angle) * 100);
+      }
+
       this.fireRay(context, angle, player.x, player.y);
     }
   },
@@ -73,13 +76,16 @@ Map.prototype = {
     var sin = Math.sin(angle);
     var cos = Math.cos(angle);
 
-    for(var i=0; i<10; i++) {
+    for(var i=0; i<100; i++) {
       currentStepX = jump(sin, cos, currentStep.x, currentStep.y);
       currentStepY = jump(cos, sin, currentStep.y, currentStep.x, true);
 
       currentStep = currentStepX.length2 < currentStepY.length2 ? currentStepX : currentStepY;
-      
-      Helper.circle(context, 2, Helper.toPixel(currentStep.x), Helper.toPixel(currentStep.y));
+
+      if(this.wallCheck(currentStep)) {
+        Helper.circle(context, 4, Helper.toPixel(currentStep.x), Helper.toPixel(currentStep.y), '#00f');
+        return;
+      }
     }
     
     /* Jump to the next gridline (we can calculate it based on the rise and the run, and starting position) */
@@ -94,5 +100,19 @@ Map.prototype = {
         length2: dx * dx + dy * dy
       };
     }
+  },
+
+  wallCheck: function(step) {
+    if(step.x % 1 == 0) {
+      if(this.get(step.x, Math.floor(step.y)) === 1 || this.get(step.x-1, Math.floor(step.y)) === 1) {
+        return true;
+      }
+    } else {
+      if(this.get(Math.floor(step.x), step.y) === 1 || this.get(Math.floor(step.x), step.y-1) === 1) {
+        return true;
+      }
+    }
+
+    return false;
   }
 };
