@@ -54,12 +54,18 @@ Map.prototype = {
   },
 
   cast: function(context, player) {
-    var x = Helper.toPixel(player.x);
-    var y = Helper.toPixel(player.y);
+    //this.fireRay(context, player.direction, player.x, player.y);
+    //this.fireRay(context, player.direction + (Config.fov/2), player.x, player.y);
+    //this.fireRay(context, player.direction - (Config.fov/2), player.x, player.y);
+    var res = Math.floor(Config.rayResolution/2);
+    var step = Config.fov/(Config.rayResolution-1);
     
-    this.fireRay(context, player.direction, player.x, player.y);
-    this.fireRay(context, player.direction + (Config.fov/2), player.x, player.y);
-    this.fireRay(context, player.direction - (Config.fov/2), player.x, player.y);
+    for(var i=0; i<Config.rayResolution; i++) {
+      angle = player.direction + step * i;
+
+      //console.log(i + ': ' + (step * 180/Math.PI));
+      this.fireRay(context, angle, player.x, player.y);
+    }
   },
 
   fireRay: function(context, angle, x, y) {
@@ -78,9 +84,10 @@ Map.prototype = {
     
     /* Jump to the next gridline (we can calculate it based on the rise and the run, and starting position) */
     function jump(rise, run, x, y, inverted) {
-      if (run === 0) return noWall;
+      if (run === 0) return { length2: Infinity};
       var dx = run > 0 ? Math.floor(x + 1) - x : Math.ceil(x - 1) - x;
       var dy = dx * (rise / run);
+
       return {
         x: inverted ? y + dy : x + dx,
         y: inverted ? x + dx : y + dy,

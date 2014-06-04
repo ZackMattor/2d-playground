@@ -1,7 +1,7 @@
 var Config = {
   blockSize: 50,
-  resolution: 100,
-  fov: Math.PI/180 * 90,
+  rayResolution: 20,
+  fov: Math.PI/180 * 45,
 };
 
 var MapData = {

@@ -26,7 +26,7 @@ var Player = function(x, y) {
   this.dx = 0.01;
   this.dy = 0.02;
 
-  this.direction = Math.PI/12;
+  this.direction = 0;
   this.fov = Math.PI;
 };
 
