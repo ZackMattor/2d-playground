@@ -1,6 +1,7 @@
 /*** Map Prototype ***/
 var Map = function() {
-  
+  canvas = document.getElementById('field2');
+  this.fp_context = canvas.getContext('2d');
 }
 
 Map.prototype = {
@@ -12,6 +13,8 @@ Map.prototype = {
     var mapData = this.model.data;
     var mapHeight = this.model.height;
     var mapWidth = this.model.width;
+
+    this.fp_context.clearRect (0, 0, 1000, 1000);
 
     var x = 0, y = 0;
 
@@ -67,7 +70,12 @@ Map.prototype = {
         Helper.line(context, x, y, x + Math.cos(angle) * 100, y + Math.sin(angle) * 100);
       }
 
-      this.fireRay(context, angle, player.x, player.y);
+      var currentStep = this.fireRay(context, angle, player.x, player.y);
+
+      var distance = Helper.distance(currentStep, player);
+      var z = distance * Math.cos(angle);
+      
+      Helper.rect(this.fp_context, '#00f', i*5, 300-(z * 5), 5, -(12-z) * 10);
     }
   },
 
@@ -84,7 +92,7 @@ Map.prototype = {
 
       if(this.wallCheck(currentStep)) {
         Helper.circle(context, 4, Helper.toPixel(currentStep.x), Helper.toPixel(currentStep.y), '#00f');
-        return;
+        return currentStep;
       }
     }
     

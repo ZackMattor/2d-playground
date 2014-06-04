@@ -16,7 +16,7 @@ var Engine = function(canvas) {
     this.player.update();
     this.map.render(this.context, this.player);
     this.player.render(this.context);
-  }.bind(this), 10);
+  }.bind(this), 100);
 };
 
 /** Player Prototype **/
