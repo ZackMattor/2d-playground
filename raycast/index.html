@@ -1,11 +1,37 @@
-<//code.jquery.com/jquery-1.11.0.min.jshtml>
+<html>
   <head>
     <title>The player lives!</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400' rel='stylesheet' type='text/css'>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="map.js"></script>
+    <script src="helpers.js"></script>
+    <script src="config.js"></script>
     <script src="main.js"></script>
+
+    <style>
+      body {
+        background: #f3f3f3;
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+
+      .field-wrap {
+        width: 600px;
+        height: 500px;
+        margin: 0px auto;
+      }
+
+      h1 {
+        font-weight: lighter;
+        font-size: 59px;
+        text-align: center;
+        color: #333;
+      }
+    </style>
   </head>
   <body>
-    Hello. This is magic.
-    <canvas id="field" height="320" width="320"></canvas>
+    <h1>Raycast Demo</h1>
+    <div class="field-wrap">
+      <canvas id="field" height="320" width="320"></canvas>
+    </div>
   </body>
 </html>
