@@ -33,9 +33,7 @@ Map.prototype = {
           break;
         }
 
-        if(color) {
-          Helper.rect(context, this.color, grid_x, grid_y, Config.blockSize, Config.blockSize);
-        }
+        if(color) Helper.rect(context, this.color, grid_x, grid_y, Config.blockSize, Config.blockSize);
 
         Helper.line(context, grid_x, 0, grid_x, Helper.toPixel(MapData.height));
       }
@@ -59,9 +57,9 @@ Map.prototype = {
   cast: function(context, player) {
     var res = Math.floor(Config.rayResolution/2);
     var step = Config.fov/(Config.rayResolution-1);
-    
+
     for(var i=0; i<Config.rayResolution; i++) {
-      angle = player.direction + step * i;
+      angle = player.direction + step * i - (Config.fov / 2);
 
       if(i == 0 || i == Config.rayResolution-1) {
         x = Helper.toPixel(player.x);
@@ -73,9 +71,14 @@ Map.prototype = {
       var currentStep = this.fireRay(context, angle, player.x, player.y);
 
       var distance = Helper.distance(currentStep, player);
-      var z = distance * Math.cos(angle);
+      var z = 1/distance * Math.cos(angle);
       
-      Helper.rect(this.fp_context, '#00f', i*5, 300-(z * 5), 5, -(12-z) * 10);
+      var left = i*5;
+      var width = 5;
+      var height = -1000 * 1/distance;
+      var top = 350-height/2;
+
+      Helper.rect(this.fp_context, '#00f', left, top, width, height);
     }
   },
 

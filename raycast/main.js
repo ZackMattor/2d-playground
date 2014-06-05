@@ -10,13 +10,14 @@ var Engine = function(canvas) {
   this.player = new Player();
   this.map = new Map();
   this.map.load(MapData);
+  this.controls = new Controls();
 
   setInterval(function() {
     this.context.clearRect (0, 0, 1000, 1000);
-    this.player.update();
+    this.player.update(this.controls);
     this.map.render(this.context, this.player);
     this.player.render(this.context);
-  }.bind(this), 100);
+  }.bind(this), 10);
 };
 
 /** Player Prototype **/
@@ -35,13 +36,18 @@ Player.prototype = {
     Helper.circle(context, 5, Helper.toPixel(this.x), Helper.toPixel(this.y));
   },
 
-  update: function() {
-    this.direction += .01;
+  update: function(controls) {
+    if(controls.keys['up']) {
+       this.y += .1 * Math.sin(this.direction);
+       this.x += .1 * Math.cos(this.direction);
+    }
 
-    this.dx *= (this.x + this.dx) > MapData.width || (this.x + this.dx) < 0 ? -1 : 1;
-    this.dy *= (this.y + this.dy) > MapData.height || (this.y + this.dy) < 0 ? -1 : 1;
+    if(controls.keys['down']) {
+       this.y -= .1 * Math.sin(this.direction);
+       this.x -= .1 * Math.cos(this.direction);
+    }
 
-    this.x += this.dx;
-    this.y += this.dy;
+    if(controls.keys['right']) this.direction += 0.05;
+    if(controls.keys['left']) this.direction -= 0.05;
   },
 };
