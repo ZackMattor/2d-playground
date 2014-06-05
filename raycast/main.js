@@ -38,16 +38,26 @@ Player.prototype = {
 
   update: function(controls) {
     if(controls.keys['up']) {
-       this.y += .1 * Math.sin(this.direction);
-       this.x += .1 * Math.cos(this.direction);
+       this.y += .05 * Math.sin(this.direction);
+       this.x += .05 * Math.cos(this.direction);
     }
 
     if(controls.keys['down']) {
-       this.y -= .1 * Math.sin(this.direction);
-       this.x -= .1 * Math.cos(this.direction);
+       this.y -= .05 * Math.sin(this.direction);
+       this.x -= .05 * Math.cos(this.direction);
     }
 
-    if(controls.keys['right']) this.direction += 0.05;
-    if(controls.keys['left']) this.direction -= 0.05;
+    if(controls.keys['strafe_left']) {
+       this.y -= .05 * Math.sin(this.direction + Math.PI/2);
+       this.x -= .05 * Math.cos(this.direction + Math.PI/2);
+    }
+
+    if(controls.keys['strafe_right']) {
+       this.y += .05 * Math.sin(this.direction + Math.PI/2);
+       this.x += .05 * Math.cos(this.direction + Math.PI/2);
+    }
+
+    if(controls.keys['right']) this.direction += 0.03;
+    if(controls.keys['left']) this.direction -= 0.03;
   },
 };

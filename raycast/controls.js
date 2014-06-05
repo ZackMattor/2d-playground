@@ -5,8 +5,8 @@ var Controls = function() {
     65: 'left',
     83: 'down',
     68: 'right',
-    81: 'rotate_cw',
-    69: 'rotate_ccw'
+    81: 'strafe_left',
+    69: 'strafe_right'
   };
 
   document.addEventListener('keydown', this.keyEvent.bind(this, true), false);
