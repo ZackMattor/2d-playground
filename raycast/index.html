@@ -19,7 +19,7 @@
         position: relative;
         width: 1000px;
         height: 700px;
-        margin: 0 auto;
+        margin: 87px auto;
         border: 1px solid black;
       }
 
@@ -36,12 +36,37 @@
         text-align: center;
         color: #333;
       }
+
+      .controls {
+        position: absolute;
+        top: -142px;
+      }
+
+      h2 {
+        font-weight: lighter;
+        margin: 0px 0px;
+        padding: 0px;
+      }
+
+      .controls ul {
+        margin: 0px;
+        padding: 0px 25px;
+      }
     </style>
   </head>
   <body>
     <a href="https://github.com/Criten/2d-playground"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
     <h1>Raycast Demo</h1>
     <div class="field-wrap">
+      <div class="controls">
+        <h2>Controls</h2>
+        <ul>
+          <li>W/S - Forwards/Backwards</li>
+          <li>A/D - Rotate Left/Right</li>
+          <li>Q/E - Strafe Left/Right</li>
+          <li>1/2 - Field Of View Up/Down</li>
+        </ul>
+      </div>
       <canvas id="field" height="320" width="320"></canvas>
       <canvas id="field2" height="700" width="1000"></canvas>
     </div>

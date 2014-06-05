@@ -6,7 +6,9 @@ var Controls = function() {
     83: 'down',
     68: 'right',
     81: 'strafe_left',
-    69: 'strafe_right'
+    69: 'strafe_right',
+    49: 'fov_increase',
+    50: 'fov_decrease',
   };
 
   document.addEventListener('keydown', this.keyEvent.bind(this, true), false);

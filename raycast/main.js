@@ -59,5 +59,8 @@ Player.prototype = {
 
     if(controls.keys['right']) this.direction += 0.03;
     if(controls.keys['left']) this.direction -= 0.03;
+
+    if(controls.keys['fov_increase'] && Config.fov < Math.PI) Config.fov += 0.03;
+    if(controls.keys['fov_decrease'] && Config.fov > Math.PI/10) Config.fov -= 0.03;
   },
 };
