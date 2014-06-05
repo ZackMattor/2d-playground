@@ -18,7 +18,7 @@ var Controls = function() {
 Controls.prototype = {
   keyEvent: function(state, evt) {
     var command = this.codes[evt.keyCode];
-    console.log(evt.keyCode);
+    //console.log(evt.keyCode);
     if(typeof command === 'undefined') return;
     this.keys[command] = state;
 
