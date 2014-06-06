@@ -25,6 +25,7 @@ Map.prototype = {
     var mapHeight = this.model.height;
     var mapWidth = this.model.width;
 
+    // Clear our palet
     this.fp_context.clearRect (0, 0, 1000, 1000);
 
     var x = 0, y = 0;
@@ -48,6 +49,7 @@ Map.prototype = {
 
         Helper.line(context, grid_x, 0, grid_x, Helper.toPixel(MapData.height));
       }
+
       Helper.line(context, 0, grid_y, Helper.toPixel(MapData.width), grid_y);
     }
 
@@ -168,5 +170,10 @@ Map.prototype = {
     }
 
     return false;
-  }
+  },
+
+  toggleWall: function(x, y) {
+    if(x < this.model.width && y < this.model.height && x >= 0 && y >= 0)
+      this.model.data[y][x] = this.get(x,y) == 1? 0 : 1;
+  },
 };

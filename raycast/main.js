@@ -12,6 +12,13 @@ var Engine = function(canvas) {
   this.map.load(MapData);
   this.controls = new Controls();
 
+  $('#field').click(function(evt) {
+    var x = Math.floor(evt.offsetX / Config.blockSize);
+    var y = Math.floor(evt.offsetY / Config.blockSize);
+
+    this.map.toggleWall(x, y);
+  }.bind(this));
+
   setInterval(function() {
     this.context.clearRect (0, 0, 1000, 1000);
     this.player.update(this.controls);
