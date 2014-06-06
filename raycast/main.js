@@ -45,27 +45,27 @@ Player.prototype = {
 
   update: function(controls) {
     if(controls.keys['up']) {
-       this.y += .05 * Math.sin(this.direction);
-       this.x += .05 * Math.cos(this.direction);
+       this.y += .02 * Math.sin(this.direction);
+       this.x += .02 * Math.cos(this.direction);
     }
 
     if(controls.keys['down']) {
-       this.y -= .05 * Math.sin(this.direction);
-       this.x -= .05 * Math.cos(this.direction);
+       this.y -= .02 * Math.sin(this.direction);
+       this.x -= .02 * Math.cos(this.direction);
     }
 
     if(controls.keys['strafe_left']) {
-       this.y -= .05 * Math.sin(this.direction + Math.PI/2);
-       this.x -= .05 * Math.cos(this.direction + Math.PI/2);
+       this.y -= .02 * Math.sin(this.direction + Math.PI/2);
+       this.x -= .02 * Math.cos(this.direction + Math.PI/2);
     }
 
     if(controls.keys['strafe_right']) {
-       this.y += .05 * Math.sin(this.direction + Math.PI/2);
-       this.x += .05 * Math.cos(this.direction + Math.PI/2);
+       this.y += .02 * Math.sin(this.direction + Math.PI/2);
+       this.x += .02 * Math.cos(this.direction + Math.PI/2);
     }
 
-    if(controls.keys['right']) this.direction += 0.03;
-    if(controls.keys['left']) this.direction -= 0.03;
+    if(controls.keys['right']) this.direction += 0.01;
+    if(controls.keys['left']) this.direction -= 0.01;
 
     if(controls.keys['fov_increase'] && Config.fov < Math.PI) Config.fov += 0.03;
     if(controls.keys['fov_decrease'] && Config.fov > Math.PI/10) Config.fov -= 0.03;
