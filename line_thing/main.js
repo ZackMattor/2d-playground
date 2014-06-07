@@ -8,6 +8,7 @@ var ENGINE = {
 
   init: function() {
     var canvas = document.getElementById('field');
+    this.colorBox = document.getElementById('color-picker');
     this.context = canvas.getContext('2d');
 
     canvas.addEventListener('click', this.onClick.bind(this));
@@ -18,7 +19,7 @@ var ENGINE = {
   onKeydown: function(evt) {
     if(evt.keyCode === 27) {
       this.lastLine().finish();
-      
+      this.colorBox.disabled = false;
       this.draw();
     }
   },
@@ -29,7 +30,8 @@ var ENGINE = {
 
     if(this.lines.length === 0 || this.lastLine().finished) {
       console.log('Adding new line');
-      this.lines.push(new LineThing({x: x, y: y}));
+      this.lines.push(new LineThing({x: x, y: y}, this.colorBox.value));
+      this.colorBox.disabled = true;
     } else {
       this.lastLine().addPoint({x: x, y: y});
     }
@@ -56,10 +58,11 @@ var ENGINE = {
 };
 
 /* Represents one line thing */
-var LineThing = function(point) {
+var LineThing = function(point, color) {
   this.resolution = 20;
   this.finished = false;
   this.points = [];
+  this.color = color || "#000";
 
   if(point) this.addPoint(point);
 };
@@ -72,7 +75,7 @@ LineThing.prototype = {
 
       // Draw a line if we have two points, and we are on the second point.
       // After this we just let the following section take over.
-      if(i === 1 && this.points.length === 2) Helper.line(context, this.points[i-1], this.points[i]);
+      if(i === 1 && this.points.length === 2) Helper.line(context, this.points[i-1], this.points[i], this.color);
 
       if(i != 0) {
         
@@ -99,11 +102,15 @@ LineThing.prototype = {
 
             var incPoint2 = {x: inc_x, y: inc_y};
 
-            Helper.line(context, incPoint, incPoint2);
+            Helper.line(context, incPoint, incPoint2,this. color);
           }
         }
       }
     }
+  },
+
+  setColor: function(color) {
+    this.color = color;
   },
 
   addPoint: function(point) {
