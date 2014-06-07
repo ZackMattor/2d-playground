@@ -12,6 +12,15 @@ var ENGINE = {
 
     canvas.addEventListener('click', this.onClick.bind(this));
     canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+    document.addEventListener('keydown', this.onKeydown.bind(this));
+  },
+
+  onKeydown: function(evt) {
+    if(evt.keyCode === 27) {
+      this.lastLine().finish();
+      
+      this.draw();
+    }
   },
   
   onClick: function(evt) {
@@ -25,11 +34,7 @@ var ENGINE = {
       this.lastLine().addPoint({x: x, y: y});
     }
 
-    
-    this.context.clearRect (0, 0, 1000, 1000);
-    for(var i=0; i<this.lines.length; i++) {
-      this.lines[i].draw(this.context);
-    }
+    this.draw();
   },
 
   onMouseMove: function() {
@@ -39,6 +44,14 @@ var ENGINE = {
 
   lastLine: function() {
     return this.lines[this.lines.length-1];
+  },
+
+  draw: function() {
+    this.context.clearRect (0, 0, 1000, 1000);
+
+    for(var i=0; i<this.lines.length; i++) {
+      this.lines[i].draw(this.context);
+    }
   }
 };
 
@@ -54,10 +67,14 @@ var LineThing = function(point) {
 LineThing.prototype = {
   draw: function(context) {
     for(var i=0; i<this.points.length; i++) {
-      Helper.circle(context, 3, this.points[i])
+      // Draw circles if active
+      if(!this.finished) Helper.circle(context, 3, this.points[i])
+
+      // Draw a line if we have two points, and we are on the second point.
+      // After this we just let the following section take over.
+      if(i === 1 && this.points.length === 2) Helper.line(context, this.points[i-1], this.points[i]);
 
       if(i != 0) {
-        Helper.line(context, this.points[i-1], this.points[i]);
         
         // If we have enough points to draw the triangle
         if(i > 1) {
@@ -71,25 +88,19 @@ LineThing.prototype = {
           var dr1 = norm1.distance/this.resolution;
           var dr2 = norm2.distance/this.resolution;
 
-          for(var j=0; j<this.resolution; j++) {
+          for(var j=0; j<this.resolution+1; j++) {
             var inc_x = point2.x + (norm1.x * j * dr1);
             var inc_y = point2.y + (norm1.y * j * dr1);
 
             var incPoint = {x: inc_x, y: inc_y};
-
-            Helper.circle(context, 2, incPoint);
 
             var inc_x = point3.x - (norm2.x * j * dr2);
             var inc_y = point3.y - (norm2.y * j * dr2);
 
             var incPoint2 = {x: inc_x, y: inc_y};
 
-            Helper.circle(context, 2, incPoint);
-
             Helper.line(context, incPoint, incPoint2);
           }
-          
-          Helper.line(context, point1, point3, '#aaa');
         }
       }
     }
@@ -99,6 +110,10 @@ LineThing.prototype = {
     console.log('Adding point number ' + this.points.length);
     this.points.push(point);
   },
+
+  finish: function() {
+    this.finished = true;
+  }
 };
 
 
