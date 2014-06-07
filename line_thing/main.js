@@ -44,7 +44,7 @@ var ENGINE = {
 
 /* Represents one line thing */
 var LineThing = function(point) {
-  this.resolution = 10;
+  this.resolution = 20;
   this.finished = false;
   this.points = [];
 
@@ -66,23 +66,27 @@ LineThing.prototype = {
           var point3 = this.points[i-2];
 
           var norm1 = Helper.normalize(point1, point2);
-          var norm2 = Helper.normalize(point2, point3);
-          var dr = norm.distance/this.resolution;
+          var norm2 = Helper.normalize(point3, point2);
+
+          var dr1 = norm1.distance/this.resolution;
+          var dr2 = norm2.distance/this.resolution;
 
           for(var j=0; j<this.resolution; j++) {
-            var inc_x = point2.x + (norm.x * j * dr);
-            var inc_y = point2.y + (norm.y * j * dr);
+            var inc_x = point2.x + (norm1.x * j * dr1);
+            var inc_y = point2.y + (norm1.y * j * dr1);
 
             var incPoint = {x: inc_x, y: inc_y};
 
             Helper.circle(context, 2, incPoint);
 
-            var inc_x = point2.x + (norm.x * j * dr);
-            var inc_y = point2.y + (norm.y * j * dr);
+            var inc_x = point3.x - (norm2.x * j * dr2);
+            var inc_y = point3.y - (norm2.y * j * dr2);
 
-            var incPoint = {x: inc_x, y: inc_y};
+            var incPoint2 = {x: inc_x, y: inc_y};
 
             Helper.circle(context, 2, incPoint);
+
+            Helper.line(context, incPoint, incPoint2);
           }
           
           Helper.line(context, point1, point3, '#aaa');
