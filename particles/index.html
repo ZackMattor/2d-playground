@@ -47,21 +47,41 @@
         margin: 0px;
         padding: 0px 25px;
       }
+
+      .attrs {
+        position: absolute;
+        top: 10px;
+      }
+
+      .attrs li {
+        display: inline;
+        list-style-type: none; 
+        padding-left: 20px;
+      }
     </style>
   </head>
   <body>
-    <!--<a href="https://github.com/Criten/2d-playground"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a> -->
+    <a href="https://github.com/Criten/2d-playground"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
     <div class="wrap">
       <h1>Particle Emitters!</h1>
       <div class="field-wrap">
         <div class="controls">
-          <h2>Controls</h2>
+          <h2>Help</h2>
           <ul>
-            <li>Click on the canvas to make lines</li>
-            <li>Press escape to finish a line</li>
-            <li>Color: <input id="color-picker" value="#000"></input></li>
+            <li>3 Points define a emitter</li>
+            <li>1st point - Emitter Location</li>
+            <li>2nd point - Emitter Direction</li>
+            <li>3rd point - Emitter Spread</li>
+            <li>Click to add point</li>
           </ul>
         </div>
+
+        <div class="attrs">
+          <li>Color: <input size="10" id="attr-color" value="#000"></input></li>
+          <li>Size: <input size="5" id="attr-size" value="3"></input></li>
+          <li>Max Age: <input size="6" id="attr-max-age" value="300"></input></li>
+        </div>
+
         <canvas id="field" height="700" width="1000"></canvas>
       </div>
     </div>

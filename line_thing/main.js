@@ -9,10 +9,12 @@ var ENGINE = {
   init: function() {
     var canvas = document.getElementById('field');
     this.colorBox = document.getElementById('color-picker');
+    this.clearButton = document.getElementById('button-clear');
     this.context = canvas.getContext('2d');
 
     canvas.addEventListener('click', this.onClick.bind(this));
     canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
+    this.clearButton.addEventListener('click', this.clearLines.bind(this));
     document.addEventListener('keydown', this.onKeydown.bind(this));
   },
 
@@ -39,9 +41,13 @@ var ENGINE = {
     this.draw();
   },
 
+  clearLines: function() {
+    this.lines = [];
+    this.draw();
+  },
+
   onMouseMove: function() {
     //console.log('mousemove');
-    
   },
 
   lastLine: function() {
