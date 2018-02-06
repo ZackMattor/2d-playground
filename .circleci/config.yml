@@ -1,0 +1,27 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 3
+jobs:
+  build:
+    #docker:
+      # specify the version you desire here
+      #   - image: circleci/ruby:2.4.1-node-browsers
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - setup_remote_docker
+      - deploy:
+          name: Build and deploy docker image
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+            # build docker image
+            docker build -t zackmattor/2d-playground:latest .
+            docker tag zackmattor/2d-playground:latest zackmattor/2d-playground:$CIRCLE_SHA1
+            docker push zackmattor/2d-playground:$CIRCLE_SHA1
+            docker push zackmattor/2d-playground:latest
