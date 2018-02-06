@@ -5,9 +5,8 @@
 version: 3
 jobs:
   build:
-    #docker:
-      # specify the version you desire here
-      #   - image: circleci/ruby:2.4.1-node-browsers
+    docker:
+      - image: circleci/node:9
 
     working_directory: ~/repo
 
