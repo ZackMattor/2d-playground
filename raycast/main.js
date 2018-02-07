@@ -21,7 +21,7 @@ var Engine = function(canvas) {
 
   setInterval(function() {
     this.context.clearRect (0, 0, 1000, 1000);
-    this.player.update(this.controls);
+    this.player.update(this.controls, this.map);
     this.map.render(this.context, this.player);
     this.player.render(this.context);
   }.bind(this), 10);
@@ -43,26 +43,37 @@ Player.prototype = {
     Helper.circle(context, 5, Helper.toPixel(this.x), Helper.toPixel(this.y));
   },
 
-  update: function(controls) {
+  update: function(controls, map) {
+    let vx = 0;
+    let vy = 0;
+
     if(controls.keys['up']) {
-       this.y += .02 * Math.sin(this.direction);
-       this.x += .02 * Math.cos(this.direction);
+       vy += .02 * Math.sin(this.direction);
+       vx += .02 * Math.cos(this.direction);
     }
 
     if(controls.keys['down']) {
-       this.y -= .02 * Math.sin(this.direction);
-       this.x -= .02 * Math.cos(this.direction);
+       vy -= .02 * Math.sin(this.direction);
+       vx -= .02 * Math.cos(this.direction);
     }
 
     if(controls.keys['strafe_left']) {
-       this.y -= .02 * Math.sin(this.direction + Math.PI/2);
-       this.x -= .02 * Math.cos(this.direction + Math.PI/2);
+       vy -= .02 * Math.sin(this.direction + Math.PI/2);
+       vx -= .02 * Math.cos(this.direction + Math.PI/2);
     }
 
     if(controls.keys['strafe_right']) {
-       this.y += .02 * Math.sin(this.direction + Math.PI/2);
-       this.x += .02 * Math.cos(this.direction + Math.PI/2);
+       vy += .02 * Math.sin(this.direction + Math.PI/2);
+       vx += .02 * Math.cos(this.direction + Math.PI/2);
     }
+
+    // Wall detection
+    let x_norm = Math.floor(this.x % Config.blockSize);
+    let y_norm = Math.floor(this.y % Config.blockSize);
+    let next_x_norm = Math.floor((this.x + vx) % Config.blockSize);
+    let next_y_norm = Math.floor((this.y + vy) % Config.blockSize);
+    if(!map.isWall(next_x_norm, y_norm)) this.x += vx;
+    if(!map.isWall(x_norm, next_y_norm)) this.y += vy;
 
     if(controls.keys['right']) this.direction += 0.01;
     if(controls.keys['left']) this.direction -= 0.01;

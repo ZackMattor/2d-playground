@@ -113,6 +113,14 @@ Map.prototype = {
     }
   },
 
+  isWall: function(x,y) {
+    return y >= this.model.data.length || 
+           y < 0 ||
+           x >= this.model.data[0].length ||
+           x < 0 ||
+           this.model.data[y][x] == 1;
+  },
+
  /**
   * fireRay(context, angle, x, y)
   *
@@ -135,7 +143,7 @@ Map.prototype = {
       currentStep = currentStepX.length2 < currentStepY.length2 ? currentStepX : currentStepY;
 
       if(this.wallCheck(currentStep)) {
-        Helper.circle(context, 4, Helper.toPixel(currentStep.x), Helper.toPixel(currentStep.y), '#00f');
+        Helper.circle(context, 3, Helper.toPixel(currentStep.x), Helper.toPixel(currentStep.y), '#ccc');
         return currentStep;
       }
     }
