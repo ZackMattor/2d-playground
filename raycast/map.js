@@ -26,7 +26,11 @@ Map.prototype = {
     var mapWidth = this.model.width;
 
     // Clear our palet
-    this.fp_context.clearRect (0, 0, 1000, 1000);
+    this.fp_context.fillStyle   = "#3E4961"; // blue
+    this.fp_context.fillRect (0, 0, 1000, 1000);
+    this.fp_context.fillStyle   = "#96A9D1"; // blue
+    this.fp_context.fillRect (0, 0, 1000, 350);
+    
 
     var x = 0, y = 0;
 
@@ -102,7 +106,7 @@ Map.prototype = {
       var width = 5;
       var height = -1000 * 1/distance;
       var top = 350-height/2;
-      var color = (currentStep.x % 1 == 0) ? '#00f' : '#00A';
+      var color = (currentStep.x % 1 == 0) ? '#D69FF5' : '#BC6FE7';
 
       Helper.rect(this.fp_context, color, left, top, width, height);
     }
